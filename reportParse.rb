@@ -13,14 +13,13 @@ class SummaryReport
 		time = Time.now
 		puts "Begin writing csv"
 		CSV.open(filepath, 'w+') do |csv|
-		  csv << ['feature_type', 'country_changed', 'attribute_value', 'protopath']
+		  csv << ['feature_type', 'country_changed', 'attribute_value']
 		  summary_hash.each do |feature_type, summary_sentences|
 		  	summary_sentences.each do |summary_sentence|
 		  		csv << [
 		  			feature_type,
-		  			summary_sentence[:summary],
-		  			summary_sentence[:attribute_value],
-		  			summary_sentence[:protopath],
+		  			summary_sentence[:summary], # join this into 1 string
+		  			summary_sentence[:attribute_value], # join this into 1 string
 		  		]
 		  	end
 		  end
@@ -49,9 +48,8 @@ class SummaryReport
 
 				hash[feature_type] ||= []
 				hash[feature_type] << {
-					summary: "#{normalized_action} in #{domain}(#{delta_percentage_in_text}) #{ending_sentence}",
-					protopath: protopath,
-					attribute_value: attribute_value,
+					summary: "#{normalized_action} in #{domain}(#{delta_percentage_in_text}) #{ending_sentence}", #join this into 1 string
+					attribute_value: attribute_value, #join this into 1 string
 				}
 			end
 		end
